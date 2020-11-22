@@ -5,13 +5,17 @@
 			<div class="footer-sub">サブタイトルが入りますサブタイトルが入ります</div><!-- /footer-sub -->
 
 			<nav class="footer-nav">
-				<ul class="footer-list">
-					<li class="menu-item"><a href="#">メニュー1</a></li>
-					<li class="menu-item"><a href="#">メニュー2</a></li>
-					<li class="menu-item"><a href="#">メニュー3</a></li>
-					<li class="menu-item"><a href="#">メニュー4</a></li>
-					<li class="menu-item"><a href="#">メニュー5</a></li>
-				</ul>
+        <?php
+        wp_nav_menu(
+        //.header-listを置き換えて、PC用メニューを動的に表示する
+        array(
+        'depth' => 1,
+        'theme_location' => 'footer-menu', //フッターメニューをここに表示すると指定
+        'container' => 'false',
+        'menu_class' => 'footer-list',
+        )
+        );
+        ?>
 			</nav>
 
 		</div><!-- /inner -->
