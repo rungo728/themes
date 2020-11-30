@@ -62,3 +62,29 @@ array(
 );
 }
 add_action('init', 'my_menu_init');
+
+/*
+* カテゴリーを1つだけ表示
+*
+* @param boolean $anchor aタグで出力するかどうか.
+* @param integer $id 投稿id.
+* @return void
+*/
+
+function my_the_post_category( $anchor = true, $id = 0 ) {
+global $post;
+//引数が渡されなければ投稿IDを見るように設定
+if ( 0 === $id ) {
+$id = $post->ID;
+}
+
+//カテゴリー一覧を取得
+$this_categories = get_the_category( $id );
+if ( $this_categories[0] ) {
+if ( $anchor ) { //引数がtrueならリンク付きで出力
+echo '<a href="' . esc_url( get_category_link( $this_categories[0]->term_id ) ) . '">' . esc_html( $this_categories[0]->cat_name ) . '</a>';
+} else { //引数がfalseならカテゴリー名のみ出力
+echo esc_html( $this_categories[0]->cat_name );
+}
+}
+}
