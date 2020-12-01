@@ -74,54 +74,16 @@
 
 
           <!-- entry-tag-items -->
-          <?php $post_tags = get_the_tags(); ?>
           <div class="entry-tag-items">
           <div class="entry-tag-head">タグ</div><!-- /entry-tag-head -->
-          <?php if ( $post_tags ) : ?>
-          <?php foreach ( $post_tags as $tag ) : ?>
-          <div class="entry-tag-item"><a href="<?php echo esc_url( get_tag_link($tag->term_id) ); ?>"><?php echo esc_html( $tag->name ); ?></a></div><!-- /entry-tag-item -->
-          <?php endforeach; ?>
-          <?php endif; ?>
+          <?php my_get_post_tags(); ?>
           </div><!-- /entry-tag-items -->
 
 
 					<div class="entry-related">
 						<div class="related-title">関連記事</div>
-            <?php if( has_category() ) {
-            $post_cats = get_the_category();
-            $cat_ids = array();
-            //所属カテゴリーのIDリストを作っておく
-            foreach($post_cats as $cat) {
-            $cat_ids[] = $cat->term_id;
-            }
-            }
-            $myposts = get_posts( array(
-            'post_type' => 'post', // 投稿タイプ
-            'posts_per_page' => '8', // ８件を取得
-            'post__not_in' => array( $post->ID ),// 表示中の投稿を除外
-            'category__in' => $cat_ids, // この投稿と同じカテゴリーに属する投稿の中から
-            'orderby' => 'rand' // ランダムに
-            ) );
-            if( $myposts ): ?>
-						<div class="related-items">
-              <?php foreach($myposts as $post): setup_postdata($post);?>
-              <a class="related-item" href="<?php the_permalink(); ?>">
-                <div class="related-item-img">
-                  <?php
-                  if (has_post_thumbnail() ) {
-                  // アイキャッチ画像が設定されてればミディアムサイズで表示
-                  the_post_thumbnail('medium');
-                  } else {
-                  // なければnoimage画像をデフォルトで表示
-                  echo '<img src="' . esc_url(get_template_directory_uri()) . '/img/noimg.png" alt="">';
-                  }
-                  ?>
-                </div>
-                <div class="related-item-title"><?php the_title(); ?></div><!-- /related-item-title -->
-              </a><!-- /related-item -->
-              <?php endforeach; wp_reset_postdata(); ?>
-						</div><!-- /related-items -->
-            <?php endif; ?>
+              <!--「template-parts」フォルダのrelated.php -->
+              <?php get_template_part('template-parts/related'); ?>
 					</div><!-- /entry-related -->
         </article> <!-- /entry -->
         <?php
